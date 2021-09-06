@@ -1,0 +1,20 @@
+
+<div class="list-group list-group-flush border-bottom scrollarea">
+    {% if latest_post %}
+        {% for post in latest_post %}
+            <a href="{{ post.get_absolute_url }}" class="list-group-item list-group-item-action py-3 lh-tight">
+                <div class="d-flex w-100 align-items-center justify-content-between">
+                    <strong class="mb-1">{{ post.title }}</strong>
+                    <small class="text-muted">{{ post.publish }}</small>
+                </div>
+                <div class="col-10 mb-1 small">{{ post.body|truncatewords:10|linebreaks }}</div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <p class="list-group-item list-group-item-action py-3 lh-tight">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+            <strong class="mb-1">Статей нет</strong>
+        </div>
+        </p>
+    {% endif %}
+</div>

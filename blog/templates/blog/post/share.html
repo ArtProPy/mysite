@@ -1,0 +1,35 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Share a post{% endblock %}
+
+{% block content %}
+    {% if sent %}
+        <br><br><br>
+        <h1>E-mail successfully sent</h1>
+        <p>"{{ post.title }}" was successfully sent to {{ form.cleaned_data.to }}</p>
+
+    {% else %}
+        <h1>Share "{{ post.title }}" by e-mail</h1>
+        <form action="." method="post">
+
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">{{ form.name.label }}:</label>
+                <input class="form-control" id="id_name" name="name" maxlength="{{ form.name.max_length }}" placeholder="username">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">{{ form.email.label }}:</label>
+                <input type="email" class="form-control" id="id_email" name="email" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">{{ form.to.label }}:</label>
+                <input type="email" class="form-control" id="id_to" name="to" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">{{ form.comment.label }}:</label>
+                <textarea class="form-control" id="id_comment" name="comment" rows="3"></textarea>
+            </div>
+            {% csrf_token %}
+            <input class="btn btn-outline-success" type="submit" value="Send e-mail">
+        </form>
+    {% endif %}
+{% endblock %}

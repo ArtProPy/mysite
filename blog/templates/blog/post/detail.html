@@ -1,0 +1,62 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+{% block content %}
+    <div class="mb-1 border-bottom head-title">
+        <h1>{{ post.title }}</h1>
+    </div>
+    <div class="rounded mb-1">
+        <p class="lead date text-muted">Publish {{ post.publish }} by {{ post.author }}</p>
+        <div class="fs-3">{{ post.body|linebreaks }}</div>
+        <a class="btn btn-outline-info" href="{% url "blog:post_share" post.id %}" role="button">Поделиться</a>
+    </div>
+    <div class="posts-another">
+        <h3 class="border_bottom">Похожие статьи</h3>
+        {% if similar_post %}
+            <ul>
+                {% for post_another in similar_post %}
+                    <li>
+                        <a class="btn btn-outline-primary" href="{{ post_another.get_absolute_url }}">{{ post_another.title }}</a>
+                    </li>
+                {% endfor %}
+
+                <a href=""></a>
+            </ul>
+        {% else %}
+            <div class="text-muted">Похожих статей не найдено</div>
+        {% endif %} 
+    </div>
+    <div class="comments border-bottom border-top mt-5">
+        {% with comments.count as total_comments %}
+            <h5 class="num border-bottom">{{ total_comments }} comment{{ total_comments|pluralize }}</h5>
+        {% endwith %}
+        {% for comment in comments %}
+            <div class="comment">
+                <p class="comment_name_user fs-5">By {{ comment.name }}</p>
+                <p class="info lead text-muted">
+                    Comment {{ forloop.counter }}
+                    {{ comment.created }}
+                </p>
+                <p>
+                    {{ comment.body|markdown }}
+                </p>
+
+            </div>
+        {% empty %}
+            <p>Статья пока не имеет комментариев.</p>
+        {% endfor %}
+    </div>
+    {% if new_comment %}
+        <h2>Ваш комментарий был добавлен.</h2>
+    {% else %}
+
+        <h2>Добвить новый комментарий</h2>
+        <form action="." method="post">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <p><input class="btn btn-outline-success" type="submit" value="Добавить комментарий"></p>
+        </form>
+    {% endif %}
+{% endblock %}
