@@ -4,10 +4,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
-from taggit.models import Tag
 
-from blog.models import Post
 from .forms import EmailPostForm, CommentForm, SearchForm
+from blog.models import Post
+from taggit.models import Tag
 
 
 class PostListView(ListView):
@@ -108,10 +108,8 @@ def post_share(request, post_id):
             cd = form.cleaned_data
             # Отправка электронной почты
             post_url = request.build_absolute_uri(post.get_absolute_url())
-            subject = '{} ({}) recommends you reading ' \
-                      '"{}"'.format(cd['name'], cd['email'], post.title)
-            message = 'Read "{}" at {}\n\n{}\'s comments:\n\n' \
-                      '{}'.format(post.title, post_url, cd['name'], cd['comment'])
+            subject = f'{cd["name"]} ({cd["email"]}) recommends you reading "{post.title}"'
+            message = f'Read "{post.title}" at {post_url}\n\n{cd["name"]}\'s comments:\n\n{cd["comment"]}'
             send_mail(subject, message, cd['email'], [cd['to']])
             sent = True
     else:

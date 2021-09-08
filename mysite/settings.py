@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog.apps.BlogConfig',
-    'taggit',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+
+    'blog.apps.BlogConfig',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -132,10 +133,10 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'localhost')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_POST = os.getenv('EMAIL_POST',)
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', True)
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'host.django.artpro@gmail.com'
-EMAIL_HOST_PASSWORD = 'hostPASSWORD123'
-EMAIL_POST = 587
-EMAIL_USE_TLS = True
 

@@ -1,10 +1,11 @@
+""" Description of the admin page """
 from django.contrib import admin
-
-from .models import Post, Comment
+from blog.models import Post, Comment
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    """ Form of posts displayed for admin """
     list_display = ('title', 'slug', 'author', 'publish', 'status')
     list_filter = ('status', 'created', 'publish', 'author')
     search_fields = ('title', 'body')
@@ -16,6 +17,7 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
+    """ Form of comments displayed for admin """
     list_display = ('name', 'email', 'post', 'created', 'active')
     list_filter = ('active', 'created', 'updated')
     search_fields = ('name', 'email', 'body')
