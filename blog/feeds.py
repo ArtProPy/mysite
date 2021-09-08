@@ -1,19 +1,25 @@
+""" News feeds """
 from django.contrib.syndication.views import Feed
 from django.template.defaultfilters import truncatewords
 
-from .models import Post
+from blog.models import Post
 
 
 class LatestPostsFeed(Feed):
+    """ Getting last posts feed """
     title = 'My blog'
     link = '/blog/'
     description = 'New posts of my blog.'
 
-    def items(self):
+    @staticmethod
+    def items():
+        """ Out last 5 posts  """
         return Post.published.all()[:5]
 
-    def item_title(self, item):
+    @staticmethod
+    def item_title(item):
         return item.title
 
-    def item_description(self, item):
+    @staticmethod
+    def item_description(item):
         return truncatewords(item.body, 30)
