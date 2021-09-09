@@ -5,9 +5,7 @@ variables.
 
 import os
 
-from datetime import timedelta
-
-from mysite.settings import *
+from mysite.settings import *  # pylint: disable=unused-wildcard-import,wildcard-import
 
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'localhost')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
