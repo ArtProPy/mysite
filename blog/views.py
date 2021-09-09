@@ -1,27 +1,23 @@
+""" A document with all the blog views """
 from django.contrib.postgres.search import SearchVector
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView
 
-from .forms import EmailPostForm, CommentForm, SearchForm
-from blog.models import Post
 from taggit.models import Tag
 
-
-class PostListView(ListView):
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = 'blog/post/list.html'
+from blog.forms import EmailPostForm, CommentForm, SearchForm
+from blog.models import Post
 
 
 def post_list(request, tag_slug=None):
+    """ Displaying a page with posts """
     search_query = request.GET.get('search')
     print(request)
     if search_query:
-        object_list = Post.published.filter(Q(title__icontains=search_query) | Q(body__icontains=search_query))
+        object_list = Post.published.filter(Q(title__icontains=search_query) |
+                                            Q(body__icontains=search_query))
     else:
         object_list = Post.published.all()
     tag = None
@@ -41,6 +37,7 @@ def post_list(request, tag_slug=None):
 
 
 def post_detail(request, year, month, day, post):
+    """ Detailed display of the page with the post """
     post = get_object_or_404(Post, slug=post, status='published',
                              publish__year=year, publish__month=month, publish__day=day)
     comments = post.comments.filter(active=True)
@@ -59,7 +56,8 @@ def post_detail(request, year, month, day, post):
     post_tags_ids = post.tags.values_list('id', flat=True)
     similar_post = Post.published.filter(tags__in=post_tags_ids).exclude(id=post.id)
     # Получение 4 похожих статей по тегам
-    similar_post = similar_post.annotate(same_tags=Count('tags')).order_by('-same_tags', '-publish')[:4]
+    similar_post = similar_post.annotate(same_tags=Count('tags')).order_by(
+        '-same_tags', '-publish')[:4]
     return render(request, 'blog/post/detail.html',
                   {'post': post, 'comments': comments,
                    'new_comment': new_comment,
@@ -68,6 +66,7 @@ def post_detail(request, year, month, day, post):
 
 
 def post_search(request):
+    """ Displaying the post search page """
     form = SearchForm()
     query = None
     results = []
@@ -78,39 +77,26 @@ def post_search(request):
             results = Post.objects.annotate(
                 search=SearchVector('title', 'body'),
             ).filter(search=query)
-    return render(request, 'blog/post/search.html', {'form': form, 'query': query, 'results': results})
-
-
-"""
-def post_search(request):
-    form = SearchForm()
-    query = None
-    results = []
-    if 'query' in request.GET:
-        form = SearchForm(request.GET)
-    if form.is_valid():
-        query = form.cleaned_data['query']
-        results = Post.objects.annotate(
-            search=SearchVector('title', 'body'),
-        ).filter(search=query)
-    return render(request, 'blog/post/search.html', {'form': form, 'query': query, 'results': results})
-"""
+    return render(request, 'blog/post/search.html',
+                  {'form': form, 'query': query, 'results': results})
 
 
 def post_share(request, post_id):
+    """ Displaying the share post page """
     post = get_object_or_404(Post, id=post_id, status='published')
-
     sent = False
     if request.method == 'POST':
         # Форма была отправлена на сохранение
         form = EmailPostForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
+            form_info = form.cleaned_data
             # Отправка электронной почты
             post_url = request.build_absolute_uri(post.get_absolute_url())
-            subject = f'{cd["name"]} ({cd["email"]}) recommends you reading "{post.title}"'
-            message = f'Read "{post.title}" at {post_url}\n\n{cd["name"]}\'s comments:\n\n{cd["comment"]}'
-            send_mail(subject, message, cd['email'], [cd['to']])
+            subject = f'{form_info["name"]} ({form_info["email"]}) recommends you ' \
+                      f'reading "{post.title}"'
+            message = f'Read "{post.title}" at {post_url}\n\n{form_info["name"]}\'' \
+                      f's comments:\n\n{form_info["comment"]}'
+            send_mail(subject, message, form_info['email'], [form_info['to']])
             sent = True
     else:
         form = EmailPostForm()
