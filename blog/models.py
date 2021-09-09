@@ -32,6 +32,7 @@ class Post(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
 
     class Meta:
+        """ Meta description of the post fields """
         ordering = ('publish',)
 
     def get_absolute_url(self):
@@ -54,6 +55,7 @@ class Comment(models.Model):
     active = models.BooleanField(default=True)
 
     class Meta:
+        """ Meta description of the comment fields """
         ordering = ('-created',)
 
     def __str__(self):
