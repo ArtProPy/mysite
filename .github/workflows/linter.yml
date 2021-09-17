@@ -32,4 +32,4 @@ jobs:
       - name: Run pylint
         run: |
           # By default max-line-length is 100, but specify it explicitly.
-          find -name "*.py" -not -path "./.git/*" -not -path "*/migrations/*" | xargs pylint --max-line-length=100 --load-plugins=pylint_django --disable=too-few-public-methods, imported-auth-user
+          find -name "*.py" -not -path "./.git/*" -not -path "*/migrations/*" | xargs pylint --max-line-length=100 --load-plugins=pylint_django --disable=too-few-public-methods,imported-auth-user
