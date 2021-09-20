@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}Title{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static "css/blog.css" %}">
 </head>
 <body>
 
@@ -50,14 +50,13 @@
         </h3>
         {% show_latest_post 3 %}
         <h3 class="d-flex align-items-center flex-shrink-0 p-2 link-dark text-decoration-none border-bottom">
-                Популярные статьи</h3>
+            Популярные статьи</h3>
         <div class="list-group list-group-flush border-bottom scrollarea">
             {% get_most_commented_posts %}
         </div>
     </div>
-
 </main>
-
+<br><br>
 <footer class="border-top">
     <div class="d-flex flex-wrap justify-content-between align-items-center py-3 ">
         <p class="col-md-4 mb-0 text-muted">My blog. I've written {% total_posts %} posts so far.</p>
