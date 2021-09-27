@@ -2,11 +2,21 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from account.models import Profile
+
 
 class LoginForm(forms.Form):
     """ Form for login """
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class ProfileEditForm(forms.ModelForm):
+    """ Profile edit form """
+    class Meta:
+        """ Meta profile edit form"""
+        model = Profile
+        fields = ('date_of_birth', 'photo')
 
 
 class UserEditForm(forms.ModelForm):
