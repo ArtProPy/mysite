@@ -29,6 +29,7 @@ urlpatterns = [
     path('blog/', include('blog.urls', namespace='blog')),
     path('sitemap.xml', sitemap, {'sitemaps': SITEMAPS},
          name='django.contrib.sitemaps.views.sitemap'),
+    path('images/', include('images.urls', namespace='images'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
