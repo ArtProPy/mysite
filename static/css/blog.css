@@ -26,6 +26,10 @@ footer{
     border-bottom: solid rgba(0, 0, 0, 0.3) 2px;
 }
 
+.close::before {
+  content: "\e028";
+}
+
 .comments{
     margin: 20px;
     padding: 5px;

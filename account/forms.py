@@ -43,3 +43,10 @@ class UserRegistrationForm(forms.ModelForm):
         if cleaned_data['password'] != cleaned_data['password2']:
             raise forms.ValidationError('Passwords don\'t match.')
         return cleaned_data['password2']
+
+    def clean_email(self):
+        """ Verifying the identity of passwords """
+        cleaned_data = self.cleaned_data
+        if len(User.objects.get(cleaned_data['email'])):
+            raise forms.ValidationError('The user with this email already exists')
+        return cleaned_data['email']

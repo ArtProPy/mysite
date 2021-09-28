@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9c9zb1+i9dwv&3tjr!ma(fo@x63w^%^4d3k9^ggy4f*1^++2hw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -90,6 +90,11 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
