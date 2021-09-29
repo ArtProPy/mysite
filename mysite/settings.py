@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9c9zb1+i9dwv&3tjr!ma(fo@x63w^%^4d3k9^ggy4f*1^++2hw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1', 'f308-79-104-0-182.ngrok.io']
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1', 'http://6cb7-79-104-0-182.ngrok.io']
 
 SITE_ID = 1
 
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'account',
     'blog',
     'images',
+    'sorl.thumbnail',
     'taggit',
 
     'django.contrib.admin',
