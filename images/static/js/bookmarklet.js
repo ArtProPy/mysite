@@ -1,7 +1,7 @@
 (function(){
     var jquery_version = '3.3.1';
-    var site_url = 'http://e5d0-79-104-0-182.ngrok.io';
-    var static_url = site_url + 'static/';
+    var site_url = 'http://58f6-79-104-0-182.ngrok.io';
+    var static_url = site_url + '/static/';
     var min_width = 100;
     var min_height = 100;
 
@@ -9,7 +9,7 @@
         var css = jQuery('<link>');
         css.attr({
             rel:  'stylesheet',
-            href: static_url + 'css/bookmarklet.css'
+            href: static_url + 'css/bookmarklet.css?r=' + Math.floor(Math.random()*99999999999999999999)
         });
         jQuery('head').append(css);
         console.log(css)
@@ -32,7 +32,7 @@
             // Скрываем букмарклет.
             jQuery('#bookmarklet').hide();
             // Открываем новое окно с формой сохранения изображения.
-            window.open(site_url +'images/create/?url='
+            window.open(site_url +'/images/create/?url='
                         + encodeURIComponent(selected_image)
                         + '&title=' + encodeURIComponent(jQuery('title').text()),
                         '_blank');

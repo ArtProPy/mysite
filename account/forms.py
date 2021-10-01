@@ -17,6 +17,9 @@ class ProfileEditForm(forms.ModelForm):
         """ Meta profile edit form"""
         model = Profile
         fields = ('date_of_birth', 'photo')
+        widgets = {
+            'date_of_birth': forms.DateInput(format='%d-%m-%Y'),
+        }
 
 
 class UserEditForm(forms.ModelForm):
