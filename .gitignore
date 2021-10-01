@@ -1,6 +1,7 @@
 .idea/
-**/__pycache__/
-static/
+__pycache__/
+./static/
+./media/
 *.sqlite3
 .env
 pyvenv.cfg

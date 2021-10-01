@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9c9zb1+i9dwv&3tjr!ma(fo@x63w^%^4d3k9^ggy4f*1^++2hw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1', '58f6-79-104-0-182.ngrok.io']
 
 SITE_ID = 1
 
@@ -34,6 +34,8 @@ SITE_ID = 1
 INSTALLED_APPS = [
     'account',
     'blog',
+    'images',
+    'sorl.thumbnail',
     'taggit',
 
     'django.contrib.admin',
@@ -91,6 +93,11 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -129,6 +136,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
